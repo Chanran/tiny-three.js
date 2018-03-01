@@ -1,0 +1,24 @@
+{
+  "name": "tiny-three.js",
+  "version": "0.0.1",
+  "description": "tiny three.js on mobile",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Chanran/tiny-three.js.git"
+  },
+  "keywords": [
+    "tiny",
+    "three.js",
+    "WebGL"
+  ],
+  "author": "blue",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Chanran/tiny-three.js/issues"
+  },
+  "homepage": "https://github.com/Chanran/tiny-three.js#readme"
+}
