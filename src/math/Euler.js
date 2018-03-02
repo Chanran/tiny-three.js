@@ -8,6 +8,7 @@ class Euler {
     this._y = y || 0
     this._z = z || 0
     this._order = order || Euler.DefaultOrder
+    this.isEuler = true
   }
 
   get x () {
