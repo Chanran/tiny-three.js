@@ -1,4 +1,4 @@
-import Vector3 from './Vector3'
+import {Vector3} from './Vector3'
 
 class Matrix4 {
   constructor() {
@@ -471,4 +471,4 @@ class Matrix4 {
 	}
 }
 
-export default Matrix4
+export {Matrix4}

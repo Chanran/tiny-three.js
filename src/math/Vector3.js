@@ -33,4 +33,4 @@ class Vector3 {
   }
 }
 
-export default Vector3
+export {Vector3}

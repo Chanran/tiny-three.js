@@ -1,4 +1,4 @@
-import Vector3 from './Vector3'
+import {Vector3} from './Vector3'
 
 class Quaternion {
   static slerp (qa, qb, qm, t) {
@@ -128,6 +128,79 @@ class Quaternion {
     this._z = quaternion.z
     this._w = quaternion.w
   }
+
+  length () {
+		return Math.sqrt( this._x * this._x + this._y * this._y + this._z * this._z + this._w * this._w );
+	}
+
+  normalize () {
+
+		var l = this.length();
+
+		if ( l === 0 ) {
+
+			this._x = 0;
+			this._y = 0;
+			this._z = 0;
+			this._w = 1;
+
+		} else {
+
+			l = 1 / l;
+
+			this._x = this._x * l;
+			this._y = this._y * l;
+			this._z = this._z * l;
+			this._w = this._w * l;
+
+		}
+
+		this.onChangeCallback();
+
+		return this;
+
+	}
+
+	multiply (q, p) {
+
+		if ( p !== undefined ) {
+
+			console.warn( 'THREE.Quaternion: .multiply() now only accepts one argument. Use .multiplyQuaternions( a, b ) instead.' );
+			return this.multiplyQuaternions( q, p );
+
+		}
+
+		return this.multiplyQuaternions( this, q );
+
+	}
+
+	premultiply (q) {
+
+		return this.multiplyQuaternions( q, this );
+
+	}
+
+	/**
+	 * 四元素相乘
+	 * 相乘的结果存放在当前四元素对象里，然后调用onChangeCallback改变外部因四元素而应该要变化的值
+	 */
+	multiplyQuaternions (a, b) {
+
+		// from http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/code/index.htm
+
+		var qax = a._x, qay = a._y, qaz = a._z, qaw = a._w;
+		var qbx = b._x, qby = b._y, qbz = b._z, qbw = b._w;
+
+		this._x = qax * qbw + qaw * qbx + qay * qbz - qaz * qby;
+		this._y = qay * qbw + qaw * qby + qaz * qbx - qax * qbz;
+		this._z = qaz * qbw + qaw * qbz + qax * qby - qay * qbx;
+		this._w = qaw * qbw - qax * qbx - qay * qby - qaz * qbz;
+
+		this.onChangeCallback();
+
+		return this;
+
+	}
   
   setFromEuler (euler, update) {
     if (! (euler && euler.isEuler)) {
@@ -199,5 +272,35 @@ class Quaternion {
 
 		return this
   }
+  
+  /**
+	 * 绕某个旋转轴旋转一定的弧度
+	 * 
+	 * @param {Vector3} axis 绕着旋转的某个旋转轴
+	 * @param {number} angle 弧度 
+	 */
+	setFromAxisAngle (axis, angle) {
 
+		// http://www.euclideanspace.com/maths/geometry/rotations/conversions/angleToQuaternion/index.htm
+
+		// assumes axis is normalized
+
+		let halfAngle = angle / 2, s = Math.sin( halfAngle )
+
+		this._x = axis.x * s
+		this._y = axis.y * s
+		this._z = axis.z * s
+		this._w = Math.cos( halfAngle )
+
+		this.onChangeCallback()
+
+		return this
+
+  }
+  
+  onChangeCallback () {
+
+  }
 }
+
+export {Quaternion}

@@ -22,4 +22,4 @@ class _Math {
   }
 }
 
-export default _Math
+export {_Math}

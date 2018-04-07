@@ -82,9 +82,9 @@ class Euler {
     return this
   }
 
-  onChange () {
+  onChangeCallback () {
 
   }
 }
 
-export default Euler
+export {Euler}
